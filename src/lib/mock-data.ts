@@ -288,3 +288,52 @@ export const mockCapsules: TimeCapsule[] = [
     progressPercent: 100,
   },
 ];
+
+export interface Echo {
+  id: string;
+  circleId: string;
+  sourceType: "checkin" | "memory" | "canvas";
+  author: (typeof mockMembers)[0];
+  content?: string;
+  imageUrl?: string;
+  originalDate: string;
+  yearsAgo: number;
+  prompt: string;
+  reactions: { emoji: string; count: number; reacted: boolean }[];
+  dismissed: boolean;
+}
+
+export const mockEchoes: Echo[] = [
+  {
+    id: "echo1",
+    circleId: "c1",
+    sourceType: "checkin",
+    author: mockMembers[2],
+    content:
+      "Just got off a 6-hour drive and all I could think about was how much I wished you guys were in the car.",
+    originalDate: "Mar 29, 2024",
+    yearsAgo: 1,
+    prompt: "One year ago.",
+    reactions: [
+      { emoji: "🥹", count: 3, reacted: false },
+      { emoji: "🤍", count: 4, reacted: true },
+    ],
+    dismissed: false,
+  },
+  {
+    id: "echo2",
+    circleId: "c2",
+    sourceType: "memory",
+    author: mockMembers[0],
+    imageUrl:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80",
+    originalDate: "Aug 14, 2023",
+    yearsAgo: 2,
+    prompt: "Remember this?",
+    reactions: [
+      { emoji: "😂", count: 2, reacted: false },
+      { emoji: "🤍", count: 5, reacted: false },
+    ],
+    dismissed: false,
+  },
+];

@@ -1,16 +1,20 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ImageIcon, Plus, SendHorizonal } from "lucide-react";
 import { clsx } from "clsx";
 import { Avatar } from "@/components/Avatar";
+import { EchoCard } from "@/components/EchoCard";
 import { TopBar } from "@/components/TopBar";
-import { mockCheckins, mockCircles, mockUser } from "@/lib/mock-data";
+import { mockCheckins, mockCircles, mockEchoes, mockUser } from "@/lib/mock-data";
 
 type Checkin = (typeof mockCheckins)[number];
 
 export default function HomePage() {
   const [activeCircle, setActiveCircle] = useState(mockCircles[0].id);
+  const [echoes, setEchoes] = useState(
+    mockEchoes.filter((echo) => echo.circleId === mockCircles[0].id && !echo.dismissed),
+  );
   const [checkins, setCheckins] = useState<Checkin[]>(mockCheckins);
   const [isOpen, setIsOpen] = useState(false);
   const [draft, setDraft] = useState("");
@@ -19,6 +23,10 @@ export default function HomePage() {
     () => mockCircles.find((circle) => circle.id === activeCircle) ?? mockCircles[0],
     [activeCircle],
   );
+
+  useEffect(() => {
+    setEchoes(mockEchoes.filter((echo) => echo.circleId === activeCircle && !echo.dismissed));
+  }, [activeCircle]);
 
   const toggleReaction = (checkinId: string, emoji: string) => {
     setCheckins((current) =>
@@ -66,6 +74,10 @@ export default function HomePage() {
     setIsOpen(false);
   };
 
+  const handleDismissEcho = (id: string) => {
+    setEchoes((prev) => prev.filter((echo) => echo.id !== id));
+  };
+
   return (
     <div className="pb-28">
       <TopBar />
@@ -107,6 +119,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {echoes.length > 0 ? (
+        <EchoCard echo={echoes[0]} onDismiss={handleDismissEcho} />
+      ) : null}
 
       <section className="mt-4">
         {checkins.map((checkin) => (

@@ -47,3 +47,72 @@ a:focus-visible {
 ::selection {
   background: rgba(201, 179, 255, 0.25);
 }
+
+@keyframes float-soft {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(20px, -24px) scale(1.04);
+  }
+  66% {
+    transform: translate(-16px, 18px) scale(0.98);
+  }
+}
+
+@keyframes float-avatar {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-float-soft {
+  animation: float-soft 12s ease-in-out infinite;
+}
+
+.animate-float-soft-delayed {
+  animation: float-soft 12s ease-in-out infinite;
+  animation-delay: -4s;
+}
+
+.animate-float-soft-slow {
+  animation: float-soft 12s ease-in-out infinite;
+  animation-delay: -8s;
+}
+
+.animate-float-avatar {
+  animation: float-avatar 9s ease-in-out infinite;
+}
+
+.animate-rise {
+  animation: rise-in 0.7s ease forwards;
+}
+
+.animate-rise-delayed {
+  opacity: 0;
+  animation: rise-in 0.8s ease forwards 0.2s;
+}
+
+.animate-rise-delayed-2 {
+  opacity: 0;
+  animation: rise-in 0.8s ease forwards 0.4s;
+}
+
+.animate-rise-delayed-3 {
+  opacity: 0;
+  animation: rise-in 0.8s ease forwards 0.6s;
+}

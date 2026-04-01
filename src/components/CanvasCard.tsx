@@ -6,22 +6,34 @@ import type { CanvasContribution, WeeklyCanvas } from "@/lib/mock-data";
 
 export function ContributionCard({
   contribution,
+  index,
 }: {
   contribution: CanvasContribution;
+  index: number;
 }) {
   return (
-    <div className="mx-4 mb-3 overflow-hidden rounded-2xl border border-border bg-surface">
+    <div
+      className="mx-4 mb-3 overflow-hidden rounded-2xl border border-border bg-surface
+                    animate-in fade-in slide-in-from-bottom-2 duration-300"
+      style={{ animationDelay: `${index * 40}ms` }}
+    >
       {contribution.type === "photo" && contribution.imageUrl ? (
         <>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={contribution.imageUrl} alt="" className="aspect-[4/3] w-full object-cover" />
-          <div className="flex items-center gap-2 p-3">
+          <img
+            src={contribution.imageUrl}
+            alt=""
+            className="aspect-[4/3] w-full object-cover"
+          />
+          <div className="p-3 flex items-center gap-2">
             <AuthorChip contribution={contribution} />
           </div>
         </>
       ) : (
         <div className="bg-gradient-to-br from-plum/50 to-surface p-5">
-          <p className="mb-1 font-serif text-4xl leading-none text-accent/20">&quot;</p>
+          <p className="mb-1 font-serif text-4xl leading-none text-accent/20">
+            &quot;
+          </p>
           <p className="font-serif text-sm italic leading-relaxed text-ink/90">
             {contribution.content}
           </p>
@@ -34,10 +46,17 @@ export function ContributionCard({
   );
 }
 
-export function AuthorChip({ contribution }: { contribution: CanvasContribution }) {
+export function AuthorChip({
+  contribution,
+}: {
+  contribution: CanvasContribution;
+}) {
   return (
     <>
-      <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full border border-accent/20 bg-accent/20 text-[9px] font-medium text-accent">
+      <div
+        className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full
+                      border border-accent/20 bg-accent/20 text-[9px] font-medium text-accent"
+      >
         {contribution.author.initials}
       </div>
       <span className="text-xs text-muted">{contribution.author.name}</span>
@@ -61,13 +80,21 @@ export function MiniChapterCard({
   return (
     <button
       onClick={onPress}
-      className="mb-2 flex w-full items-center gap-3 rounded-2xl border border-border bg-surface p-3 text-left transition-transform active:scale-[0.98]"
+      className="mb-2 flex w-full items-center gap-3 rounded-2xl border border-border
+                 bg-surface p-3 text-left transition-transform active:scale-[0.98]"
     >
       {firstPhoto ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={firstPhoto.imageUrl} alt="" className="h-12 w-12 flex-shrink-0 rounded-xl object-cover" />
+        <img
+          src={firstPhoto.imageUrl}
+          alt=""
+          className="h-12 w-12 flex-shrink-0 rounded-xl object-cover"
+        />
       ) : (
-        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl border border-accent/20 bg-plum/30">
+        <div
+          className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl
+                        border border-accent/20 bg-plum/30"
+        >
           <Lock size={14} className="text-accent/60" />
         </div>
       )}
@@ -83,13 +110,16 @@ export function MiniChapterCard({
             <div
               key={contribution.id}
               style={{ marginLeft: index === 0 ? 0 : -5, zIndex: index }}
-              className="flex h-5 w-5 items-center justify-center rounded-full border border-bg bg-accent/20 text-[9px] font-medium text-accent"
+              className="flex h-5 w-5 items-center justify-center rounded-full border border-bg
+                         bg-accent/20 text-[9px] font-medium text-accent"
             >
               {contribution.author.initials}
             </div>
           ))}
         </div>
-        <p className="text-[10px] text-muted">{chapter.contributorCount} contributions</p>
+        <p className="text-[10px] text-muted">
+          {chapter.contributorCount} contributions
+        </p>
       </div>
     </button>
   );
@@ -114,13 +144,18 @@ export function ContributeSheet({
 }) {
   return (
     <>
-      <div onClick={onClose} className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm" />
+      <div
+        onClick={onClose}
+        className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm"
+      />
 
       <div
-        className="fixed bottom-0 left-0 right-0 z-40 mx-auto max-w-[430px] rounded-t-3xl
-                   bg-surface2 px-5 pb-10 pt-3"
+        className="fixed bottom-0 left-0 right-0 z-40 mx-auto max-w-[430px]
+                      rounded-t-3xl bg-surface2 px-5 pb-10 pt-3
+                      animate-in slide-in-from-bottom duration-300"
       >
         <div className="mx-auto mb-5 h-1 w-10 rounded-full bg-border" />
+
         <p className="mb-5 text-center text-xs text-muted">
           Adding to Chapter {chapterNumber} · Seals Sunday
         </p>
@@ -149,11 +184,19 @@ export function ContributeSheet({
             placeholder="Something from this week worth keeping..."
             rows={4}
             autoFocus
-            className="w-full resize-none rounded-2xl border border-border bg-surface px-4 py-3 text-sm leading-relaxed text-ink outline-none transition-colors placeholder:text-muted focus:border-accent/40"
+            className="w-full resize-none rounded-2xl border border-border bg-surface
+                       px-4 py-3 text-sm leading-relaxed text-ink outline-none
+                       transition-colors placeholder:text-muted focus:border-accent/40"
           />
         ) : (
-          <div className="flex aspect-video w-full flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-border bg-surface">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-accent/20 bg-plum/40">
+          <div
+            className="flex aspect-video w-full flex-col items-center justify-center gap-2
+                       rounded-2xl border border-dashed border-border bg-surface"
+          >
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-full border
+                            border-accent/20 bg-plum/40"
+            >
               <span className="text-xl text-accent">+</span>
             </div>
             <p className="text-sm text-muted">Choose a photo</p>
@@ -168,7 +211,8 @@ export function ContributeSheet({
         <button
           onClick={onSubmit}
           disabled={inputType === "quote" && !inputText.trim()}
-          className="w-full rounded-2xl bg-accent py-4 text-sm font-medium text-bg transition-all active:scale-[0.98] disabled:opacity-30"
+          className="w-full rounded-2xl bg-accent py-4 text-sm font-medium text-bg
+                     transition-all active:scale-[0.98] disabled:opacity-30"
         >
           Add to Chapter {chapterNumber}
         </button>

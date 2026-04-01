@@ -11,7 +11,8 @@ import { mockChapters, mockMemories } from "@/lib/mock-data";
 export default function MemoriesPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const defaultTab = searchParams.get("tab") === "chapters" ? "chapters" : "memories";
+  const defaultTab =
+    searchParams.get("tab") === "chapters" ? "chapters" : "memories";
   const [activeTab, setActiveTab] = useState<"memories" | "chapters">(defaultTab);
   const [isOpen, setIsOpen] = useState(false);
   const [draft, setDraft] = useState("");
@@ -24,17 +25,17 @@ export default function MemoriesPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-bg">
+    <div className="min-h-screen bg-bg flex flex-col">
       <div
-        className="fixed left-0 right-0 top-0 z-10 mx-auto flex h-14 max-w-[430px] items-center
-                   border-b border-border bg-bg/80 px-5 backdrop-blur-md"
+        className="fixed top-0 left-0 right-0 z-10 mx-auto flex h-14 max-w-[430px]
+                      items-center border-b border-border bg-bg/80 px-5 backdrop-blur-md"
       >
         <span className="font-serif text-lg italic text-accent">Memories</span>
       </div>
 
       <div
-        className="fixed left-0 right-0 top-14 z-10 mx-auto flex max-w-[430px] gap-2 border-b border-border
-                   bg-bg px-4 py-2"
+        className="fixed top-14 left-0 right-0 z-10 mx-auto flex max-w-[430px] gap-2
+                      border-b border-border bg-bg px-4 py-2"
       >
         {(["memories", "chapters"] as const).map((tab) => (
           <button
@@ -70,10 +71,16 @@ export default function MemoriesPage() {
                         {memory.date}
                       </p>
                       {memory.body ? (
-                        <p className="mt-1 text-xs leading-relaxed text-ink/80">{memory.body}</p>
+                        <p className="mt-1 text-xs leading-relaxed text-ink/80">
+                          {memory.body}
+                        </p>
                       ) : null}
                       <div className="mt-2 flex justify-end">
-                        <Avatar initials={memory.author.initials} color={memory.author.color} size={18} />
+                        <Avatar
+                          initials={memory.author.initials}
+                          color={memory.author.color}
+                          size={18}
+                        />
                       </div>
                     </div>
                   </article>
@@ -89,7 +96,11 @@ export default function MemoriesPage() {
                     </p>
                     <p className="mt-2 text-[10px] text-muted">{memory.date}</p>
                     <div className="mt-3 flex justify-end">
-                      <Avatar initials={memory.author.initials} color={memory.author.color} size={18} />
+                      <Avatar
+                        initials={memory.author.initials}
+                        color={memory.author.color}
+                        size={18}
+                      />
                     </div>
                   </article>
                 )}

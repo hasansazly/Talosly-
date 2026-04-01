@@ -120,7 +120,7 @@ export type CanvasStatus = "open" | "sealing" | "sealed";
 
 export interface CanvasContribution {
   id: string;
-  author: (typeof mockMembers)[number];
+  author: (typeof mockMembers)[0];
   type: "photo" | "quote";
   content?: string;
   imageUrl?: string;
@@ -255,7 +255,8 @@ export const mockChapters: WeeklyCanvas[] = [
         id: "cv-12-2",
         author: mockMembers[4],
         type: "quote",
-        content: "The thing about good friends is you pick up exactly where you left off.",
+        content:
+          "The thing about good friends is you pick up exactly where you left off.",
         day: "Fri",
         addedAt: "Mar 28",
       },
@@ -277,7 +278,8 @@ export const mockChapters: WeeklyCanvas[] = [
         id: "cv-11-1",
         author: mockMembers[1],
         type: "quote",
-        content: "Spent the whole day doing nothing and it was exactly what I needed.",
+        content:
+          "Spent the whole day doing nothing and it was exactly what I needed.",
         day: "Sun",
         addedAt: "Mar 23",
       },
@@ -294,7 +296,8 @@ export const mockChapters: WeeklyCanvas[] = [
         id: "cv-11-3",
         author: mockMembers[3],
         type: "quote",
-        content: "Called my mom for an hour. Realized I needed that more than she did.",
+        content:
+          "Called my mom for an hour. Realized I needed that more than she did.",
         day: "Thu",
         addedAt: "Mar 20",
       },

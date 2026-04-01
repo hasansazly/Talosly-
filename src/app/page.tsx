@@ -195,7 +195,7 @@ export default function RootPage() {
           <br />
           <em className="italic text-accent">you actually love</em>
         </h1>
-        <p className="animate-rise-delayed-2 mt-6 max-w-[21rem] text-[16px] font-light leading-[1.7] text-muted">
+        <p className="animate-rise-delayed-2 mt-6 max-w-[21rem] text-[16px] font-medium leading-[1.7] text-[#F5F5F7]">
           Talosly is a private space for your closest circle. Check in, remember
           together, and stay genuinely close.
         </p>
@@ -236,7 +236,7 @@ export default function RootPage() {
                 </div>
               </div>
               <p className="mt-3 text-left text-[13px] font-medium text-ink">The Chicago crew</p>
-              <p className="mt-1 text-left text-[11px] font-light text-muted">
+              <p className="mt-1 text-left text-[11px] font-medium text-[#A1A1AA]">
                 5 people · last check-in 2h ago
               </p>
             </div>
@@ -248,9 +248,9 @@ export default function RootPage() {
                     M
                   </div>
                   <span className="text-[12px] font-medium text-ink">Maya</span>
-                  <span className="ml-auto text-[10px] text-muted">2h ago</span>
+                  <span className="ml-auto text-[10px] font-medium text-[#A1A1AA]">2h ago</span>
                 </div>
-                <p className="text-[12px] font-light leading-[1.5] text-muted">
+                <p className="text-[12px] font-medium leading-[1.5] text-[#A1A1AA]">
                   Finally made it through the week. First time I&apos;ve seen sunshine in four days.
                   Miss you all.
                 </p>
@@ -277,7 +277,7 @@ export default function RootPage() {
                 </div>
                 <div>
                   <p className="text-[12px] font-medium text-ink">Jamie visits Chicago</p>
-                  <p className="mt-0.5 text-[11px] font-light text-muted">In 18 days · 3 going</p>
+                  <p className="mt-0.5 text-[11px] font-medium text-[#A1A1AA]">In 18 days · 3 going</p>
                 </div>
               </div>
 
@@ -287,9 +287,9 @@ export default function RootPage() {
                     J
                   </div>
                   <span className="text-[12px] font-medium text-ink">Jamie</span>
-                  <span className="ml-auto text-[10px] text-muted">5h ago</span>
+                  <span className="ml-auto text-[10px] font-medium text-[#A1A1AA]">5h ago</span>
                 </div>
-                <p className="text-[12px] font-light leading-[1.5] text-muted">
+                <p className="text-[12px] font-medium leading-[1.5] text-[#A1A1AA]">
                   Can&apos;t wait for April. Already planning what we&apos;re eating first.
                 </p>
                 <div className="mt-2 flex gap-1.5">

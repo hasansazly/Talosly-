@@ -147,23 +147,144 @@ export const mockCanvas = {
   pendingMembers: [mockMembers[3], mockMembers[4]],
 };
 
-export const mockCapsules = [
+export type CapsuleStatus = "collecting" | "sealed" | "unlocked";
+export type TriggerType = "date" | "event" | "circle";
+export type ContentType = "text" | "photo" | "voice";
+
+export interface CapsuleContribution {
+  id: string;
+  author: (typeof mockMembers)[number];
+  type: ContentType;
+  text?: string;
+  imageUrl?: string;
+  addedAt: string;
+}
+
+export interface TimeCapsule {
+  id: string;
+  name: string;
+  createdBy: (typeof mockMembers)[number];
+  status: CapsuleStatus;
+  triggerType: TriggerType;
+  unlockDate?: string;
+  triggerLabel?: string;
+  collectDeadline: string;
+  contributions: CapsuleContribution[];
+  allMembers: typeof mockMembers;
+  sealedAt?: string;
+  unlockedAt?: string;
+  daysUntilUnlock?: number;
+  progressPercent?: number;
+}
+
+export const mockCapsules: TimeCapsule[] = [
   {
     id: "cap1",
-    from: mockMembers[1],
-    lockedUntil: "Apr 18, 2025",
-    trigger: "Jamie visits Chicago",
-    triggerType: "event" as const,
-    daysUntil: 18,
-    preview: "A letter + 3 photos",
+    name: "Before Jamie moves to London",
+    createdBy: mockMembers[0],
+    status: "collecting",
+    triggerType: "date",
+    unlockDate: "2026-01-01",
+    collectDeadline: "2025-04-07",
+    contributions: [
+      {
+        id: "cc1",
+        author: mockMembers[0],
+        type: "text",
+        text: "I keep thinking about that last night we all stayed up until sunrise. I want future-us to remember how it felt before everything changed.",
+        addedAt: "Apr 1",
+      },
+      {
+        id: "cc2",
+        author: mockMembers[2],
+        type: "photo",
+        imageUrl:
+          "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80",
+        addedAt: "Apr 2",
+      },
+    ],
+    allMembers: mockMembers,
+    daysUntilUnlock: 275,
+    progressPercent: 8,
   },
   {
     id: "cap2",
-    from: mockMembers[0],
-    lockedUntil: "Oct 1, 2025",
-    trigger: "In 6 months",
-    triggerType: "date" as const,
-    daysUntil: 183,
-    preview: "Voice memo · 1m 22s",
+    name: "For Priya's graduation",
+    createdBy: mockMembers[1],
+    status: "sealed",
+    triggerType: "event",
+    triggerLabel: "When Priya graduates",
+    collectDeadline: "2025-03-15",
+    sealedAt: "Mar 15, 2025",
+    contributions: [
+      {
+        id: "cc3",
+        author: mockMembers[1],
+        type: "text",
+        text: "placeholder — hidden until open",
+        addedAt: "Mar 10",
+      },
+      {
+        id: "cc4",
+        author: mockMembers[2],
+        type: "text",
+        text: "placeholder — hidden until open",
+        addedAt: "Mar 12",
+      },
+      {
+        id: "cc5",
+        author: mockMembers[3],
+        type: "photo",
+        imageUrl: "",
+        addedAt: "Mar 14",
+      },
+    ],
+    allMembers: mockMembers,
+    daysUntilUnlock: 45,
+    progressPercent: 62,
+  },
+  {
+    id: "cap3",
+    name: "Summer reunion — one year later",
+    createdBy: mockMembers[0],
+    status: "unlocked",
+    triggerType: "date",
+    unlockDate: "2025-03-28",
+    collectDeadline: "2024-09-01",
+    sealedAt: "Sep 1, 2024",
+    unlockedAt: "Mar 28, 2025",
+    contributions: [
+      {
+        id: "cc6",
+        author: mockMembers[0],
+        type: "text",
+        text: "If you're reading this, we actually did it. We stayed close even after everything. I'm so proud of us.",
+        addedAt: "Aug 28",
+      },
+      {
+        id: "cc7",
+        author: mockMembers[1],
+        type: "text",
+        text: "Hey future Jamie. I hope the thing you were scared about turned out okay. It always does.",
+        addedAt: "Aug 29",
+      },
+      {
+        id: "cc8",
+        author: mockMembers[2],
+        type: "photo",
+        imageUrl:
+          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&q=80",
+        addedAt: "Aug 30",
+      },
+      {
+        id: "cc9",
+        author: mockMembers[3],
+        type: "text",
+        text: "I added this at 2am and I don't remember what I wrote but I hope it's good.",
+        addedAt: "Aug 31",
+      },
+    ],
+    allMembers: mockMembers,
+    progressPercent: 100,
   },
 ];

@@ -116,36 +116,202 @@ export const mockEvents = [
   },
 ];
 
-export const mockCanvas = {
-  weekLabel: "Week of Mar 31",
-  endsIn: "4 days",
-  frozen: false,
+export type CanvasStatus = "open" | "sealing" | "sealed";
+
+export interface CanvasContribution {
+  id: string;
+  author: (typeof mockMembers)[number];
+  type: "photo" | "quote";
+  content?: string;
+  imageUrl?: string;
+  day: string;
+  addedAt: string;
+}
+
+export interface WeeklyCanvas {
+  id: string;
+  circleId: string;
+  status: CanvasStatus;
+  chapterNumber: number;
+  weekLabel: string;
+  opensAt: string;
+  sealsAt: string;
+  contributions: CanvasContribution[];
+  allMembers: typeof mockMembers;
+  sealedAt?: string;
+  hoursUntilSeal?: number;
+  contributorCount: number;
+}
+
+export const mockActiveCanvas: WeeklyCanvas = {
+  id: "canvas-week-14",
+  circleId: "c1",
+  status: "open",
+  chapterNumber: 14,
+  weekLabel: "Week of Apr 7",
+  opensAt: "2025-04-07T00:00:00Z",
+  sealsAt: "2025-04-13T23:59:59Z",
+  hoursUntilSeal: 96,
   contributions: [
     {
       id: "cv1",
       author: mockMembers[0],
-      type: "quote" as const,
+      type: "quote",
       content: "Some walks you just need to take alone.",
       day: "Mon",
+      addedAt: "Apr 7",
     },
     {
       id: "cv2",
       author: mockMembers[1],
-      type: "photo" as const,
+      type: "photo",
       imageUrl:
         "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&q=80",
       day: "Tue",
+      addedAt: "Apr 8",
     },
     {
       id: "cv3",
       author: mockMembers[2],
-      type: "quote" as const,
+      type: "quote",
       content: "Made the soup recipe. It tasted like the trip.",
       day: "Wed",
+      addedAt: "Apr 9",
     },
   ],
-  pendingMembers: [mockMembers[3], mockMembers[4]],
+  allMembers: mockMembers,
+  contributorCount: 3,
 };
+
+export const mockChapters: WeeklyCanvas[] = [
+  {
+    id: "canvas-week-13",
+    circleId: "c1",
+    status: "sealed",
+    chapterNumber: 13,
+    weekLabel: "Week of Mar 31",
+    opensAt: "2025-03-31T00:00:00Z",
+    sealsAt: "2025-04-06T23:59:59Z",
+    sealedAt: "Apr 6, 2025",
+    contributions: [
+      {
+        id: "cv-13-1",
+        author: mockMembers[0],
+        type: "quote",
+        content: "Finished the book. Cried on the train. Very normal.",
+        day: "Mon",
+        addedAt: "Mar 31",
+      },
+      {
+        id: "cv-13-2",
+        author: mockMembers[1],
+        type: "photo",
+        imageUrl:
+          "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80",
+        day: "Wed",
+        addedAt: "Apr 2",
+      },
+      {
+        id: "cv-13-3",
+        author: mockMembers[2],
+        type: "quote",
+        content: "Spring finally showed up. About time.",
+        day: "Thu",
+        addedAt: "Apr 3",
+      },
+      {
+        id: "cv-13-4",
+        author: mockMembers[3],
+        type: "photo",
+        imageUrl:
+          "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?w=400&q=80",
+        day: "Sat",
+        addedAt: "Apr 5",
+      },
+    ],
+    allMembers: mockMembers,
+    contributorCount: 4,
+  },
+  {
+    id: "canvas-week-12",
+    circleId: "c1",
+    status: "sealed",
+    chapterNumber: 12,
+    weekLabel: "Week of Mar 24",
+    opensAt: "2025-03-24T00:00:00Z",
+    sealsAt: "2025-03-30T23:59:59Z",
+    sealedAt: "Mar 30, 2025",
+    contributions: [
+      {
+        id: "cv-12-1",
+        author: mockMembers[0],
+        type: "photo",
+        imageUrl:
+          "https://images.unsplash.com/photo-1504700610630-ac6aba3536d3?w=400&q=80",
+        day: "Tue",
+        addedAt: "Mar 25",
+      },
+      {
+        id: "cv-12-2",
+        author: mockMembers[4],
+        type: "quote",
+        content: "The thing about good friends is you pick up exactly where you left off.",
+        day: "Fri",
+        addedAt: "Mar 28",
+      },
+    ],
+    allMembers: mockMembers,
+    contributorCount: 2,
+  },
+  {
+    id: "canvas-week-11",
+    circleId: "c1",
+    status: "sealed",
+    chapterNumber: 11,
+    weekLabel: "Week of Mar 17",
+    opensAt: "2025-03-17T00:00:00Z",
+    sealsAt: "2025-03-23T23:59:59Z",
+    sealedAt: "Mar 23, 2025",
+    contributions: [
+      {
+        id: "cv-11-1",
+        author: mockMembers[1],
+        type: "quote",
+        content: "Spent the whole day doing nothing and it was exactly what I needed.",
+        day: "Sun",
+        addedAt: "Mar 23",
+      },
+      {
+        id: "cv-11-2",
+        author: mockMembers[2],
+        type: "photo",
+        imageUrl:
+          "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400&q=80",
+        day: "Wed",
+        addedAt: "Mar 19",
+      },
+      {
+        id: "cv-11-3",
+        author: mockMembers[3],
+        type: "quote",
+        content: "Called my mom for an hour. Realized I needed that more than she did.",
+        day: "Thu",
+        addedAt: "Mar 20",
+      },
+      {
+        id: "cv-11-4",
+        author: mockMembers[4],
+        type: "photo",
+        imageUrl:
+          "https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=400&q=80",
+        day: "Fri",
+        addedAt: "Mar 21",
+      },
+    ],
+    allMembers: mockMembers,
+    contributorCount: 4,
+  },
+];
 
 export type CapsuleStatus = "collecting" | "sealed" | "unlocked";
 export type TriggerType = "date" | "event" | "circle";

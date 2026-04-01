@@ -1,13 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CalendarDays, Plus } from "lucide-react";
 import { clsx } from "clsx";
 import { Avatar } from "@/components/Avatar";
-import { TopBar } from "@/components/TopBar";
-import { mockMemories } from "@/lib/mock-data";
+import { ChapterRow } from "@/components/ChapterCard";
+import { mockChapters, mockMemories } from "@/lib/mock-data";
 
 export default function MemoriesPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const defaultTab = searchParams.get("tab") === "chapters" ? "chapters" : "memories";
+  const [activeTab, setActiveTab] = useState<"memories" | "chapters">(defaultTab);
   const [isOpen, setIsOpen] = useState(false);
   const [draft, setDraft] = useState("");
   const [date, setDate] = useState("");
@@ -19,52 +24,92 @@ export default function MemoriesPage() {
   };
 
   return (
-    <div className="pb-28">
-      <TopBar />
+    <div className="flex min-h-screen flex-col bg-bg">
+      <div
+        className="fixed left-0 right-0 top-0 z-10 mx-auto flex h-14 max-w-[430px] items-center
+                   border-b border-border bg-bg/80 px-5 backdrop-blur-md"
+      >
+        <span className="font-serif text-lg italic text-accent">Memories</span>
+      </div>
 
-      <div className="columns-2 gap-3 space-y-3 px-4 pb-4 pt-[72px]">
-        {mockMemories.map((memory) => (
-          <div key={memory.id} className="mb-3 break-inside-avoid">
-            {memory.hasImage ? (
-              <article className="overflow-hidden rounded-2xl border border-border bg-surface">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={memory.imageUrl}
-                  alt={memory.body ?? `Memory from ${memory.date}`}
-                  className="w-full object-cover"
-                />
-                <div className="p-3">
-                  <p className="text-[10px] uppercase tracking-widest text-muted">{memory.date}</p>
-                  {memory.body ? (
-                    <p className="mt-1 text-xs leading-relaxed text-ink/80">{memory.body}</p>
-                  ) : null}
-                  <div className="mt-2 flex justify-end">
-                    <Avatar
-                      initials={memory.author.initials}
-                      color={memory.author.color}
-                      size={18}
-                    />
-                  </div>
-                </div>
-              </article>
-            ) : (
-              <article
-                className={clsx(
-                  "rounded-2xl border border-border bg-gradient-to-br p-4",
-                  memory.gradient,
-                )}
-              >
-                <p className="font-serif text-sm italic leading-relaxed text-accent/90">
-                  {memory.body}
-                </p>
-                <p className="mt-2 text-[10px] text-muted">{memory.date}</p>
-                <div className="mt-3 flex justify-end">
-                  <Avatar initials={memory.author.initials} color={memory.author.color} size={18} />
-                </div>
-              </article>
+      <div
+        className="fixed left-0 right-0 top-14 z-10 mx-auto flex max-w-[430px] gap-2 border-b border-border
+                   bg-bg px-4 py-2"
+      >
+        {(["memories", "chapters"] as const).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={clsx(
+              "flex-1 rounded-xl border py-2 text-sm font-medium transition-all active:scale-[0.98]",
+              activeTab === tab
+                ? "border-accent/40 bg-plum/40 text-accent"
+                : "border-border bg-surface text-muted",
             )}
-          </div>
+          >
+            {tab === "memories" ? "Memories" : "Chapters"}
+          </button>
         ))}
+      </div>
+
+      <div className="flex-1 overflow-y-scroll pb-24 pt-28">
+        {activeTab === "memories" ? (
+          <div className="columns-2 gap-3 space-y-3 px-4">
+            {mockMemories.map((memory) => (
+              <div key={memory.id} className="mb-3 break-inside-avoid">
+                {memory.hasImage ? (
+                  <article className="overflow-hidden rounded-2xl border border-border bg-surface">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={memory.imageUrl}
+                      alt={memory.body ?? `Memory from ${memory.date}`}
+                      className="w-full object-cover"
+                    />
+                    <div className="p-3">
+                      <p className="text-[10px] uppercase tracking-widest text-muted">
+                        {memory.date}
+                      </p>
+                      {memory.body ? (
+                        <p className="mt-1 text-xs leading-relaxed text-ink/80">{memory.body}</p>
+                      ) : null}
+                      <div className="mt-2 flex justify-end">
+                        <Avatar initials={memory.author.initials} color={memory.author.color} size={18} />
+                      </div>
+                    </div>
+                  </article>
+                ) : (
+                  <article
+                    className={clsx(
+                      "rounded-2xl border border-border bg-gradient-to-br p-4",
+                      memory.gradient,
+                    )}
+                  >
+                    <p className="font-serif text-sm italic leading-relaxed text-accent/90">
+                      {memory.body}
+                    </p>
+                    <p className="mt-2 text-[10px] text-muted">{memory.date}</p>
+                    <div className="mt-3 flex justify-end">
+                      <Avatar initials={memory.author.initials} color={memory.author.color} size={18} />
+                    </div>
+                  </article>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="px-4">
+            <p className="mb-4 text-xs leading-relaxed text-muted">
+              Every Sunday a new chapter is sealed. These are yours.
+            </p>
+            {mockChapters.map((chapter) => (
+              <ChapterRow
+                key={chapter.id}
+                chapter={chapter}
+                onPress={() => router.push(`/canvas/chapter/${chapter.id}`)}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       <button

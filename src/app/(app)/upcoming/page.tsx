@@ -1,20 +1,33 @@
 "use client";
 
 import { useState } from "react";
-import { Bell, ChevronRight, Plus } from "lucide-react";
+import { Bell, ChevronRight, FileText, Lock, Mic, Plus } from "lucide-react";
 import { clsx } from "clsx";
 import { TopBar } from "@/components/TopBar";
-import { mockEvents } from "@/lib/mock-data";
+import { mockCapsules, mockEvents } from "@/lib/mock-data";
 
 export default function UpcomingPage() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isEventOpen, setIsEventOpen] = useState(false);
+  const [isCapsuleOpen, setIsCapsuleOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
+  const [capsuleMode, setCapsuleMode] = useState<"letter" | "voice">("letter");
+  const [triggerType, setTriggerType] = useState<"date" | "event">("date");
+  const [triggerDate, setTriggerDate] = useState("");
+  const [triggerLabel, setTriggerLabel] = useState("");
 
   const handleSave = () => {
     setTitle("");
     setDate("");
-    setIsOpen(false);
+    setIsEventOpen(false);
+  };
+
+  const handleSeal = () => {
+    setCapsuleMode("letter");
+    setTriggerType("date");
+    setTriggerDate("");
+    setTriggerLabel("");
+    setIsCapsuleOpen(false);
   };
 
   return (
@@ -56,9 +69,51 @@ export default function UpcomingPage() {
         ))}
       </section>
 
+      <section className="mb-2 mt-6 flex items-center justify-between px-4">
+        <p className="text-sm font-medium text-ink">Time capsules</p>
+        <button
+          type="button"
+          onClick={() => setIsCapsuleOpen(true)}
+          className="rounded-full border border-border bg-surface2 px-3 py-1 text-xs text-muted transition-transform active:scale-95"
+        >
+          + New
+        </button>
+      </section>
+
+      <section>
+        {mockCapsules.map((capsule) => {
+          const progress = `${Math.max(6, Math.min(100, 100 - (capsule.daysUntil / 183) * 100))}%`;
+          return (
+            <article
+              key={capsule.id}
+              className="mx-4 mb-3 overflow-hidden rounded-2xl border border-border bg-surface"
+            >
+              <div className="flex items-start gap-3 p-4">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-accent/20 bg-plum/40">
+                  <Lock size={16} className="text-accent" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium text-ink">{capsule.trigger}</p>
+                  <p className="mt-0.5 text-xs text-muted">
+                    From {capsule.from.name} · Opens in {capsule.daysUntil} days
+                  </p>
+                  <p className="mt-0.5 text-xs text-muted">{capsule.preview}</p>
+                </div>
+                <span className="rounded-full bg-plum/30 px-2 py-0.5 text-[10px] text-accent/80">
+                  {capsule.daysUntil}d
+                </span>
+              </div>
+              <div className="h-0.5 w-full bg-border">
+                <div className="h-full bg-accent/50" style={{ width: progress }} />
+              </div>
+            </article>
+          );
+        })}
+      </section>
+
       <button
         type="button"
-        onClick={() => setIsOpen(true)}
+        onClick={() => setIsEventOpen(true)}
         aria-label="Add event"
         className="fixed bottom-20 right-5 z-20 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-bg shadow-lg shadow-accent/25 transition-transform active:scale-95"
       >
@@ -68,19 +123,19 @@ export default function UpcomingPage() {
       <div
         className={clsx(
           "fixed inset-0 z-30 transition-opacity duration-300",
-          isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
+          isEventOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         )}
       >
         <button
           type="button"
           aria-label="Close add event sheet"
           className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          onClick={() => setIsOpen(false)}
+          onClick={() => setIsEventOpen(false)}
         />
         <div
           className={clsx(
             "absolute bottom-0 left-0 right-0 mx-auto max-w-[430px] rounded-t-3xl bg-surface2 px-5 pb-8 pt-3 transition-transform duration-300",
-            isOpen ? "translate-y-0" : "translate-y-full",
+            isEventOpen ? "translate-y-0" : "translate-y-full",
           )}
         >
           <div className="mx-auto mb-5 h-1 w-10 rounded-full bg-border" />
@@ -107,6 +162,112 @@ export default function UpcomingPage() {
               Save
             </button>
           </div>
+        </div>
+      </div>
+
+      <div
+        className={clsx(
+          "fixed inset-0 z-30 transition-opacity duration-300",
+          isCapsuleOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
+        )}
+      >
+        <button
+          type="button"
+          aria-label="Close capsule sheet"
+          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          onClick={() => setIsCapsuleOpen(false)}
+        />
+        <div
+          className={clsx(
+            "absolute bottom-0 left-0 right-0 mx-auto max-w-[430px] rounded-t-3xl bg-surface2 px-5 pb-8 pt-3 transition-transform duration-300",
+            isCapsuleOpen ? "translate-y-0" : "translate-y-full",
+          )}
+        >
+          <div className="mx-auto mb-5 h-1 w-10 rounded-full bg-border" />
+          <p className="font-serif text-base italic text-ink">Seal something away</p>
+
+          <div className="mt-4 grid grid-cols-1 gap-3">
+            <button
+              type="button"
+              onClick={() => setCapsuleMode("letter")}
+              className={clsx(
+                "flex items-center gap-3 rounded-2xl border p-4 text-left",
+                capsuleMode === "letter" ? "border-accent bg-plum/20" : "border-border bg-surface2",
+              )}
+            >
+              <FileText size={18} className="text-accent" />
+              <div>
+                <p className="text-sm font-medium text-ink">Write a letter</p>
+                <p className="text-xs text-muted">Seal a note for later</p>
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() => setCapsuleMode("voice")}
+              className={clsx(
+                "flex items-center gap-3 rounded-2xl border p-4 text-left",
+                capsuleMode === "voice" ? "border-accent bg-plum/20" : "border-border bg-surface2",
+              )}
+            >
+              <Mic size={18} className="text-accent" />
+              <div>
+                <p className="text-sm font-medium text-ink">Record a voice memo</p>
+                <p className="text-xs text-muted">Coming soon</p>
+              </div>
+            </button>
+          </div>
+
+          <div className="mt-4 flex gap-2">
+            <button
+              type="button"
+              onClick={() => setTriggerType("date")}
+              className={clsx(
+                "rounded-full border px-3 py-1.5 text-sm",
+                triggerType === "date"
+                  ? "border-accent bg-plum text-accent"
+                  : "border-border bg-surface2 text-muted",
+              )}
+            >
+              On a date
+            </button>
+            <button
+              type="button"
+              onClick={() => setTriggerType("event")}
+              className={clsx(
+                "rounded-full border px-3 py-1.5 text-sm",
+                triggerType === "event"
+                  ? "border-accent bg-plum text-accent"
+                  : "border-border bg-surface2 text-muted",
+              )}
+            >
+              When something happens
+            </button>
+          </div>
+
+          {triggerType === "date" ? (
+            <input
+              type="date"
+              value={triggerDate}
+              onChange={(event) => setTriggerDate(event.target.value)}
+              className="mt-4 w-full rounded-xl border border-border bg-surface2 px-4 py-3 text-ink outline-none [color-scheme:dark]"
+            />
+          ) : (
+            <input
+              type="text"
+              value={triggerLabel}
+              onChange={(event) => setTriggerLabel(event.target.value)}
+              placeholder="e.g. When Jamie visits Chicago"
+              className="mt-4 w-full rounded-xl border border-border bg-surface2 px-4 py-3 text-ink outline-none placeholder:text-muted"
+            />
+          )}
+
+          <button
+            type="button"
+            onClick={handleSeal}
+            className="mt-4 w-full rounded-full bg-accent py-3 text-center text-sm font-medium text-bg"
+          >
+            Seal capsule
+          </button>
         </div>
       </div>
     </div>

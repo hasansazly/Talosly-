@@ -115,3 +115,55 @@ export const mockEvents = [
     going: 2,
   },
 ];
+
+export const mockCanvas = {
+  weekLabel: "Week of Mar 31",
+  endsIn: "4 days",
+  frozen: false,
+  contributions: [
+    {
+      id: "cv1",
+      author: mockMembers[0],
+      type: "quote" as const,
+      content: "Some walks you just need to take alone.",
+      day: "Mon",
+    },
+    {
+      id: "cv2",
+      author: mockMembers[1],
+      type: "photo" as const,
+      imageUrl:
+        "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&q=80",
+      day: "Tue",
+    },
+    {
+      id: "cv3",
+      author: mockMembers[2],
+      type: "quote" as const,
+      content: "Made the soup recipe. It tasted like the trip.",
+      day: "Wed",
+    },
+  ],
+  pendingMembers: [mockMembers[3], mockMembers[4]],
+};
+
+export const mockCapsules = [
+  {
+    id: "cap1",
+    from: mockMembers[1],
+    lockedUntil: "Apr 18, 2025",
+    trigger: "Jamie visits Chicago",
+    triggerType: "event" as const,
+    daysUntil: 18,
+    preview: "A letter + 3 photos",
+  },
+  {
+    id: "cap2",
+    from: mockMembers[0],
+    lockedUntil: "Oct 1, 2025",
+    trigger: "In 6 months",
+    triggerType: "date" as const,
+    daysUntil: 183,
+    preview: "Voice memo · 1m 22s",
+  },
+];

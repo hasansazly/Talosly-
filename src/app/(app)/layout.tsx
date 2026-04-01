@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Calendar, LogOut, MessageCircle } from "lucide-react";
+import { BookOpen, Calendar, LayoutGrid, LogOut, MessageCircle } from "lucide-react";
 import { AuthGate } from "@/components/AuthGate";
 import { useAuth } from "@/components/AuthProvider";
 
 const tabs = [
   { href: "/home", label: "Today", Icon: MessageCircle },
+  { href: "/canvas", label: "Canvas", Icon: LayoutGrid },
   { href: "/memories", label: "Memories", Icon: BookOpen },
   { href: "/upcoming", label: "Upcoming", Icon: Calendar },
 ];
@@ -31,7 +32,7 @@ export default function AppLayout({
         </button>
         <main className="flex-1 pb-24">{children}</main>
         <nav
-          className="fixed bottom-0 left-0 right-0 mx-auto grid h-16 max-w-[430px] grid-cols-3 border-t border-border/80 bg-bg/90 backdrop-blur-xl"
+          className="fixed bottom-0 left-0 right-0 mx-auto grid h-16 max-w-[430px] grid-cols-4 border-t border-border/80 bg-bg/90 backdrop-blur-xl"
           style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
         >
           {tabs.map(({ href, label, Icon }) => {
@@ -44,11 +45,11 @@ export default function AppLayout({
                 className="flex flex-col items-center justify-center gap-1 transition-all active:scale-95"
               >
                 <Icon
-                  size={22}
+                  size={20}
                   className={active ? "text-ink" : "text-muted"}
                   fill={active ? "currentColor" : "none"}
                 />
-                <span className={`text-[10px] ${active ? "text-ink" : "text-muted"}`}>
+                <span className={`text-[9px] ${active ? "text-ink" : "text-muted"}`}>
                   {label}
                 </span>
               </Link>

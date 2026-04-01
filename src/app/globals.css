@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  background-color: #0A0A0F;
+  color: #F0EAF8;
+  font-family: 'DM Sans', sans-serif;
+  max-width: 430px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at top, rgba(201, 179, 255, 0.08), transparent 32%),
+    linear-gradient(180deg, rgba(42, 11, 61, 0.35) 0%, rgba(10, 10, 15, 1) 28%);
+}
+
+* {
+  box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid rgba(201, 179, 255, 0.75);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgba(201, 179, 255, 0.25);
+}

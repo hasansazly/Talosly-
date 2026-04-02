@@ -116,6 +116,18 @@ export const mockEvents = [
   },
 ];
 
+export const mockInvite = {
+  code: "abc123",
+  circleName: "The Chicago crew",
+  invitedBy: "Maya",
+  memberCount: 3,
+  previewCheckin: {
+    author: mockMembers[0],
+    body: "Finally made it through the week. Miss you all.",
+    timestamp: "2h ago",
+  },
+};
+
 export type CanvasStatus = "open" | "sealing" | "sealed";
 
 export interface CanvasContribution {
